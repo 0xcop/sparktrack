@@ -1,5 +1,20 @@
-﻿{% extends 'base.html' %}
+﻿{% extends "base.html" %}
 {% block content %}
-<h1>sparktrack</h1>
-<p><a href="/signup">Sign up</a> – <a href="/login">Login</a></p>
+{% if user %}
+  <p>Welcome, <strong>{{ user }}</strong>!</p>
+  <form method="post" action="/projects" class="row">
+    <input name="name" placeholder="New project name" required>
+    <button>Create</button>
+  </form>
+  <ul>
+  {% for p in projects %}
+    <li><a href="/project/{{ p.id }}">{{ p.name }}</a></li>
+  {% else %}
+    <li>No projects yet.</li>
+  {% endfor %}
+  </ul>
+  <form method="post" action="/logout"><button>Logout</button></form>
+{% else %}
+  <p><a href="/signup">Sign up</a> or <a href="/login">Login</a></p>
+{% endif %}
 {% endblock %}

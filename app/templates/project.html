@@ -1,0 +1,22 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<h2>{{ project.name }}</h2>
+<form method="post" action="/issues" class="row">
+  <input type="hidden" name="project_id" value="{{ project.id }}">
+  <input name="title" placeholder="Issue title" required>
+  <button>Add</button>
+</form>
+<ul>
+{% for i in issues %}
+  <li>
+    [{{ i.status }}] {{ i.title }}
+    <form method="post" action="/issues/{{ i.id }}/toggle" style="display:inline">
+      <button type="submit">toggle</button>
+    </form>
+  </li>
+{% else %}
+  <li>No issues yet.</li>
+{% endfor %}
+</ul>
+<p><a href="/">Back</a></p>
+{% endblock %}
